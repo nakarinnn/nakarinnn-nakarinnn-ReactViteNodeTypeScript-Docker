@@ -12,6 +12,10 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello Express.js')
 });
 
+app.get('/test', (req: Request, res: Response) => {
+  res.send('Hello Test!!!')
+});
+
 app.listen(port, async () => {
   try {
     await sequelize.authenticate();
