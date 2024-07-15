@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./myapp_be
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./myapp_be:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:982540@db:5432/mydatabase
+  frontend:
+    build:
+      context: ./myapp_fe
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./myapp_fe:/app
+      - /app/node_modules
+    # environment:
+    #   - VITE_API_URL=http://localhost:3000
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 982540
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
